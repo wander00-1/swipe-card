@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.1.1 - 2026-11-18
+
+### Fixed
+
+- Click-and-drag with a mouse now swipes even when it starts on an image (or link), instead of dragging the picture. Text no longer gets selected while dragging.
+
 ## 6.1.0 - 2026-11-18
 
 ### Changed

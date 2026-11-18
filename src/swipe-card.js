@@ -91,6 +91,7 @@ export class SwipeCard extends LitElement {
     this._onEditorSelect = this._onEditorSelect.bind(this);
     this._onPointerDown = this._onPointerDown.bind(this);
     this._onClickCapture = this._onClickCapture.bind(this);
+    this._onDragStart = this._onDragStart.bind(this);
     this._ro = window.ResizeObserver
       ? new ResizeObserver(() => this._scheduleUpdate())
       : undefined;
@@ -183,6 +184,7 @@ export class SwipeCard extends LitElement {
     const container = this._container;
     container.addEventListener("pointerdown", this._onPointerDown, true);
     container.addEventListener("click", this._onClickCapture, true);
+    container.addEventListener("dragstart", this._onDragStart, true);
   }
 
   updated(changed) {
@@ -373,8 +375,10 @@ export class SwipeCard extends LitElement {
       return;
     }
 
-    this._swiper.on("sliderMove", () => {
+    this._swiper.on("sliderMove", (_s, e) => {
       this._dragged = true;
+      // A mouse drag would otherwise select the card text it passes over.
+      if (e?.pointerType === "mouse") window.getSelection()?.removeAllRanges();
     });
     this._swiper.on("touchStart", () => {
       this._dragged = false;
@@ -445,6 +449,20 @@ export class SwipeCard extends LitElement {
     };
     window.addEventListener("pointerup", restore, true);
     window.addEventListener("pointercancel", restore, true);
+  }
+
+  // Browsers start a native "drag this picture/link" on mouse drag, which
+  // steals the pointer from Swiper. Cancel it so the drag swipes instead.
+  // Elements that opt in with draggable="true" keep native drag and drop.
+  _onDragStart(ev) {
+    const container = this._container;
+    for (const node of ev.composedPath()) {
+      if (node === container) break;
+      if (node instanceof Element && node.getAttribute("draggable") === "true") {
+        return;
+      }
+    }
+    ev.preventDefault();
   }
 
   // Swallow the click that ends a drag so it does not trigger tap actions
