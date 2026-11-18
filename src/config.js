@@ -7,6 +7,7 @@ export const NULLABLE_MODULES = [
   "navigation",
   "scrollbar",
   "autoplay",
+  "mousewheel",
 ];
 
 const isObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
@@ -61,6 +62,11 @@ export function configToForm(config) {
     auto_height: !!p.autoHeight,
     loop: !!p.loop,
     free_mode: enabled(p, "freeMode") && !!p.freeMode,
+    mousewheel: !enabled(p, "mousewheel")
+      ? "off"
+      : isObject(p.mousewheel) && p.mousewheel.forceToAxis
+        ? "horizontal"
+        : "any",
     autoplay,
     speed: numOrNull(p.speed),
     start_card: numOrNull(config.start_card),
@@ -156,6 +162,20 @@ export function applyFormChanges(config, prev, next) {
         case "free_mode":
           setFlag(p, "freeMode", v);
           break;
+        case "mousewheel": {
+          if (v !== "horizontal" && v !== "any") {
+            delete p.mousewheel;
+            break;
+          }
+          const mw = isObject(p.mousewheel) ? { ...p.mousewheel } : {};
+          delete mw.enabled;
+          mw.forceToAxis = v === "horizontal";
+          // Hand scrolling back to the page at the first and last card, so
+          // the card doesn't trap the wheel.
+          if (mw.releaseOnEdges === undefined) mw.releaseOnEdges = true;
+          p.mousewheel = mw;
+          break;
+        }
         case "autoplay":
           if (typeof v !== "number" || v <= 0) {
             delete p.autoplay;

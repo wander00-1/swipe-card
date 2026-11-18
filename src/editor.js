@@ -150,6 +150,19 @@ const SCHEMA = [
           },
           { name: "loop", selector: { boolean: {} } },
           { name: "free_mode", selector: { boolean: {} } },
+          {
+            name: "mousewheel",
+            selector: {
+              select: {
+                mode: "dropdown",
+                options: [
+                  { value: "off", label: "Off" },
+                  { value: "horizontal", label: "Sideways only (trackpad, Shift+wheel)" },
+                  { value: "any", label: "Any wheel" },
+                ],
+              },
+            },
+          },
         ],
       },
     ],
@@ -183,10 +196,13 @@ const LABELS = {
   speed: "Transition speed",
   loop: "Loop around",
   free_mode: "Free scrolling (no snapping)",
+  mousewheel: "Mouse wheel",
   parameters: "Swiper parameters (YAML)",
 };
 
 const HELPERS = {
+  mousewheel:
+    "Any wheel: scrolling over the card moves it, and the page scrolls again at the first or last card.",
   pagination_overlay: "Off: dots and scrollbar sit in a strip below the cards.",
   slides_per_view: "Leave empty for one card at a time.",
   card_width: "CSS width per card, e.g. 80% or 300px. Pair with 'slidesPerView: auto' in Advanced.",

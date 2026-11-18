@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.2.0 - 2026-11-18
+
+### Added
+
+- Mouse wheel option in the editor (Behaviour section). "Sideways only" moves the cards with a trackpad side-swipe or Shift+wheel and leaves normal scrolling to the page. "Any wheel" moves them with the normal wheel too, and hands scrolling back to the page at the first and last card. Off by default.
+
 ## 6.1.1 - 2026-11-18
 
 ### Fixed

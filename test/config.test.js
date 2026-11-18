@@ -99,3 +99,17 @@ test("pagination_overlay toggles as a top-level flag", () => {
   assert.equal(on.pagination_overlay, true);
   assert.equal("pagination_overlay" in edit(on, { pagination_overlay: false }), false);
 });
+
+test("mousewheel modes map to Swiper params and back", () => {
+  const any = edit({ type: "t", cards: [] }, { mousewheel: "any" });
+  assert.deepEqual(any.parameters.mousewheel, { forceToAxis: false, releaseOnEdges: true });
+  assert.equal(configToForm(any).mousewheel, "any");
+  const side = edit(any, { mousewheel: "horizontal" });
+  assert.equal(side.parameters.mousewheel.forceToAxis, true);
+  assert.equal(configToForm(side).mousewheel, "horizontal");
+  assert.equal(edit(side, { mousewheel: "off" }).parameters, undefined);
+  assert.equal(configToForm({ parameters: { mousewheel: true } }).mousewheel, "any");
+  assert.equal(configToForm({ parameters: { mousewheel: null } }).mousewheel, "any");
+  assert.equal(configToForm({ parameters: {} }).mousewheel, "off");
+  assert.deepEqual(buildSwiperParams({ parameters: { mousewheel: null } }).mousewheel, {});
+});
