@@ -53,6 +53,7 @@ const SCHEMA = [
         schema: [
           { name: "navigation", selector: { boolean: {} } },
           { name: "scrollbar", selector: { boolean: {} } },
+          { name: "pagination_overlay", selector: { boolean: {} } },
         ],
       },
     ],
@@ -167,6 +168,7 @@ const LABELS = {
   pagination: "Page indicator",
   navigation: "Show arrows",
   scrollbar: "Show scrollbar",
+  pagination_overlay: "Show indicator over the cards",
   effect: "Transition effect",
   direction: "Swipe direction",
   slides_per_view: "Cards visible at once",
@@ -185,6 +187,7 @@ const LABELS = {
 };
 
 const HELPERS = {
+  pagination_overlay: "Off: dots and scrollbar sit in a strip below the cards.",
   slides_per_view: "Leave empty for one card at a time.",
   card_width: "CSS width per card, e.g. 80% or 300px. Pair with 'slidesPerView: auto' in Advanced.",
   card_height: "Fixed height, e.g. 300px. Needed for vertical swiping.",

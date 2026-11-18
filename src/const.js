@@ -1,4 +1,4 @@
-export const CARD_VERSION = "6.0.1";
+export const CARD_VERSION = "6.1.0";
 
 // The editor and the preview card live in the same document; this window
 // event lets the preview follow whichever child card tab is being edited.

@@ -26,7 +26,7 @@ Edit a dashboard, select **Add card** and pick **Swipe Card**. The editor has fi
 
 | Section | What it does |
 | --- | --- |
-| **Pagination and navigation** | Page indicator (dots, compact dots, numbers or a progress bar), arrows and a scrollbar. |
+| **Pagination and navigation** | Page indicator (dots, compact dots, numbers or a progress bar), arrows and a scrollbar. The indicator sits below the cards unless you choose to show it over them. |
 | **Layout and effect** | Transition effect (slide, fade, cube, coverflow, flip, cards), direction, how many cards show at once, the gap between them, card width and height, centring, and resizing to fit the current card. |
 | **Behaviour** | Which card to start on, returning to it after a period of inactivity, auto-advance, transition speed, looping and free scrolling. |
 | **Advanced Swiper parameters** | A YAML box for any [Swiper parameter](https://swiperjs.com/swiper-api#parameters). The fields above edit this box too, so you can mix the two. |
@@ -63,6 +63,7 @@ cards:
 | `reset_after` | number | Seconds of inactivity before returning to `start_card` (or the first card). |
 | `card_width` | string | CSS width for each card, such as `80%` or `300px`. Usually paired with `slidesPerView: auto`. |
 | `card_height` | string | Fixed height for the card, such as `300px`. Vertical swiping needs this. |
+| `pagination_overlay` | boolean | Show the dots/numbers and scrollbar over the cards instead of in a strip below them. Default `false`. |
 | `parameters` | object | Any [Swiper parameter](https://swiperjs.com/swiper-api#parameters). |
 
 Writing a module name with no value (for example `pagination:`) turns that module on with its default settings, as in earlier versions.

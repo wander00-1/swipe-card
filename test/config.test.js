@@ -83,3 +83,19 @@ test("buildSwiperParams does not mutate the config", () => {
   buildSwiperParams(cfg, { pagination: "P" });
   assert.equal(cfg.parameters.pagination, null);
 });
+
+test("bottomIndicators: strip below for dots and scrollbar, not progress bar or vertical", async () => {
+  const { bottomIndicators } = await import("../src/config.js");
+  assert.deepEqual(bottomIndicators({ parameters: { pagination: null } }), { pagination: true, scrollbar: false });
+  assert.deepEqual(bottomIndicators({ parameters: { pagination: { type: "fraction" }, scrollbar: {} } }), { pagination: true, scrollbar: true });
+  assert.equal(bottomIndicators({ parameters: { pagination: { type: "progressbar" } } }).pagination, false);
+  assert.equal(bottomIndicators({ parameters: { pagination: null, direction: "vertical" } }).pagination, false);
+  assert.equal(bottomIndicators({ pagination_overlay: true, parameters: { pagination: null } }).pagination, false);
+  assert.equal(bottomIndicators({}).pagination, false);
+});
+
+test("pagination_overlay toggles as a top-level flag", () => {
+  const on = edit({ type: "t", cards: [] }, { pagination_overlay: true });
+  assert.equal(on.pagination_overlay, true);
+  assert.equal("pagination_overlay" in edit(on, { pagination_overlay: false }), false);
+});

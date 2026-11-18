@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.1.0 - 2026-11-18
+
+### Changed
+
+- The page dots (or numbers) and the scrollbar now sit in a strip below the cards instead of on top of the card content.
+
+### Added
+
+- "Show indicator over the cards" option (`pagination_overlay: true`) to keep the old overlay look.
+
 ## 6.0.1 - 2026-11-18
 
 ### Fixed

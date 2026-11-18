@@ -50,6 +50,7 @@ export function configToForm(config) {
 
   return {
     pagination,
+    pagination_overlay: config.pagination_overlay === true,
     navigation: enabled(p, "navigation"),
     scrollbar: enabled(p, "scrollbar"),
     effect: typeof p.effect === "string" ? p.effect : "slide",
@@ -167,6 +168,9 @@ export function applyFormChanges(config, prev, next) {
             p.autoplay = ap;
           }
           break;
+        case "pagination_overlay":
+          setFlag(out, "pagination_overlay", v);
+          break;
         case "start_card":
         case "reset_after":
           setOrDelete(out, key, typeof v === "number" && v > 0 ? v : null);
@@ -230,6 +234,23 @@ export function buildSwiperParams(config, els = {}) {
   if (p.touchStartPreventDefault === undefined) p.touchStartPreventDefault = false;
 
   return p;
+}
+
+/**
+ * Which indicators should sit in a strip below the cards rather than over
+ * them. Only horizontal swipers put these along the bottom edge; the
+ * progress bar runs along the top, so it never needs the strip.
+ */
+export function bottomIndicators(config) {
+  const p = isObject(config.parameters) ? config.parameters : {};
+  if (p.direction === "vertical" || config.pagination_overlay === true) {
+    return { pagination: false, scrollbar: false };
+  }
+  const pg = isObject(p.pagination) ? p.pagination : {};
+  return {
+    pagination: enabled(p, "pagination") && pg.type !== "progressbar",
+    scrollbar: enabled(p, "scrollbar"),
+  };
 }
 
 export function hasModule(config, key) {

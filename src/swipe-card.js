@@ -1,8 +1,14 @@
 import { LitElement, html, css, unsafeCSS, nothing } from "lit";
+import { classMap } from "lit/directives/class-map.js";
 import Swiper from "swiper/bundle";
 import swiperStyle from "swiper/swiper-bundle.css";
 
-import { buildSwiperParams, hasModule, normalizeConfig } from "./config.js";
+import {
+  bottomIndicators,
+  buildSwiperParams,
+  hasModule,
+  normalizeConfig,
+} from "./config.js";
 import { EDITOR_SELECT_EVENT, getLastEditorSelection } from "./const.js";
 
 // Anything matching this inside a slide gets the pointer to itself instead of
@@ -196,6 +202,13 @@ export class SwipeCard extends LitElement {
     if (!this._config) return nothing;
     const c = this._config;
     const empty = c.cards.length === 0;
+    const below = bottomIndicators(c);
+    // classMap leaves the classes Swiper adds to this element alone.
+    const classes = classMap({
+      swiper: true,
+      "pagination-below": below.pagination,
+      "scrollbar-below": below.scrollbar,
+    });
     return html`
       ${empty && this._preview
         ? html`<div class="placeholder">
@@ -203,7 +216,7 @@ export class SwipeCard extends LitElement {
           </div>`
         : nothing}
       <div
-        class="swiper"
+        class=${classes}
         dir=${this._rtl ? "rtl" : "ltr"}
         style=${c.card_height ? `height:${c.card_height}` : ""}
         ?hidden=${empty}
@@ -469,6 +482,26 @@ export class SwipeCard extends LitElement {
       ${unsafeCSS(swiperStyle)}
       .swiper[hidden] {
         display: none;
+      }
+      /* Reserve a strip under the cards for the dots/numbers and scrollbar
+         so they don't sit on top of the card content. */
+      .swiper.pagination-below {
+        padding-bottom: 24px;
+      }
+      .swiper.scrollbar-below {
+        padding-bottom: 16px;
+      }
+      .swiper.pagination-below.scrollbar-below {
+        padding-bottom: 36px;
+      }
+      .swiper.pagination-below > .swiper-pagination {
+        bottom: 4px;
+      }
+      .swiper.pagination-below.scrollbar-below > .swiper-pagination {
+        bottom: 14px;
+      }
+      .swiper.scrollbar-below > .swiper-scrollbar {
+        bottom: 4px;
       }
       .swiper-slide {
         height: auto;
