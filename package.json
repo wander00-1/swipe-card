@@ -3,9 +3,9 @@
   "version": "6.2.0",
   "description": "A Home Assistant Lovelace card that lets you swipe through multiple cards, with a full visual editor.",
   "repository": "github:wander00-1/swipe-card",
-  "author": "Bram Kragten <mail@bramkragten.nl>",
+  "author": "Grant (https://github.com/wander00-1)",
   "contributors": [
-    "Grant"
+    "Bram Kragten <mail@bramkragten.nl> (original author)"
   ],
   "license": "MIT",
   "type": "module",
