@@ -1,5 +1,11 @@
 # Changelog
 
+## 6.0.1 - 2026-11-18
+
+### Fixed
+
+- Cards of different heights now all fill the full height of the swipe card, so a shorter card no longer ends above its neighbours. Cards stay at their natural height when "Resize to the active card" (`autoHeight`) is on.
+
 ## 6.0.0 - 2026-11-18
 
 Rewritten for current Home Assistant. Existing YAML configurations keep working.

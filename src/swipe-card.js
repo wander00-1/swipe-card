@@ -474,7 +474,10 @@ export class SwipeCard extends LitElement {
         height: auto;
         box-sizing: border-box;
       }
-      .swiper-slide > * {
+      /* Slides stretch to the tallest card; pass that height down to the
+         card element so cards with ha-card { height: 100% } fill it. */
+      .swiper-slide > *,
+      .swiper-slide > hui-card > * {
         display: block;
         height: 100%;
       }
